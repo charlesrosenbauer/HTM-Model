@@ -1,6 +1,8 @@
 #include "stdlib.h"
 #include "stdint.h"
 #include "stdio.h"
+#include "sdr.h"
+#include "dendrite.h"
 
 
 
