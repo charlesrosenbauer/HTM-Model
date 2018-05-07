@@ -51,3 +51,33 @@ inline int getLowestIndex(uint64_t x){
 
   return acum;
 }
+
+
+
+
+
+
+
+
+
+
+inline void seedRand(int seed){
+  randstate = seed;
+  if(!(seed % 2)){
+    randstate++;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+inline int8_t fastRand(){
+  randstate = (135976497283641 * randstate) + 135761793679;
+  return (int8_t)(((randstate / 64) % 256) - 128);
+}

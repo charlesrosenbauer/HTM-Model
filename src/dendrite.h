@@ -41,6 +41,8 @@ typedef struct{
 SDR256 toSDR(Dendrite*);
 int    match(Dendrite*, SDR256, int);
 void   learn(Dendrite*, SDR256, int);
+void   showDendrite(Dendrite*);
+void   randDendrite(Dendrite*);
 
 
 

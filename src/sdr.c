@@ -1,6 +1,7 @@
 #include "sdr.h"
 #include "stdint.h"
 #include "stdlib.h"
+#include "stdio.h"
 #include "funcs.h"
 
 
@@ -50,6 +51,27 @@ inline SDR256 sdr256_intersection(SDR256 a, SDR256 b){
 
 inline int sdr256_count(SDR256 x){
   return popcount(x.bits[0]) + popcount(x.bits[1]) + popcount(x.bits[2]) + popcount(x.bits[3]);
+}
+
+
+
+
+
+
+
+
+
+
+void sdr256_show(SDR256 x){
+  for(int i = 0; i < 256; i++){
+    if(i%64 == 0) printf("|");
+    if((uint64_t)x.bits[i/64] & ((uint64_t)1 << (i%64))){
+      printf("1");
+    }else{
+      printf("0");
+    }
+  }
+  printf("\n");
 }
 
 
