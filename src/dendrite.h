@@ -38,8 +38,9 @@ typedef struct{
 
 
 
-int match(Dendrite*, SDR256, int);
-//Dendrite learn(Dendrite, SDR256, int);
+SDR256 toSDR(Dendrite*);
+int    match(Dendrite*, SDR256, int);
+void   learn(Dendrite*, SDR256, int);
 
 
 

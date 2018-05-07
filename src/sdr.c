@@ -1,6 +1,7 @@
 #include "sdr.h"
 #include "stdint.h"
 #include "stdlib.h"
+#include "funcs.h"
 
 
 
@@ -36,6 +37,19 @@ inline SDR256 sdr256_intersection(SDR256 a, SDR256 b){
   ret.bits[2] = a.bits[2] & b.bits[2];
   ret.bits[3] = a.bits[3] & b.bits[3];
   return ret;
+}
+
+
+
+
+
+
+
+
+
+
+inline int sdr256_count(SDR256 x){
+  return popcount(x.bits[0]) + popcount(x.bits[1]) + popcount(x.bits[2]) + popcount(x.bits[3]);
 }
 
 
@@ -107,6 +121,23 @@ BigSDR bigsdr_intersection(BigSDR a, BigSDR b){
   }
 
   return ret;
+}
+
+
+
+
+
+
+
+
+
+
+inline int bigsdr_count(BigSDR x){
+  int acum = 0;
+  for(int i = 0; i < x.size; i++)
+    acum += sdr256_count(x.chunks[i]);
+
+  return acum;
 }
 
 
