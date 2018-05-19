@@ -42,7 +42,7 @@ int match(Dendrite* d, SDR256 sdr, int threshold){
 
   int count = popcount(inter.bits[0]) + popcount(inter.bits[1]) + popcount(inter.bits[2]) + popcount(inter.bits[3]);
 
-  return count > threshold;
+  return count >= threshold;
 }
 
 
@@ -58,7 +58,9 @@ void learn(Dendrite* d, SDR256 sdr, int threshold){
 
   if(match(d, sdr, threshold)){
 
-    int reassign = 0; // Boolean
+    SDR256 dend = toSDR(d); // Probably not efficient to recalculate this, but KISS for now.
+
+    int reassign = 0; // Bit vector
 
     for(int i = 0; i < 8; i++){
       int shift = 4 * (i % 2);
@@ -67,7 +69,7 @@ void learn(Dendrite* d, SDR256 sdr, int threshold){
       int bitindex = d->pos[i] / 64;
       int bitoffset= d->pos[i] % 64;
 
-      if(sdr.bits[bitindex] & d->pos[bitindex] & (1 << bitoffset)){
+      if(sdr.bits[bitindex] & dend.bits[bitindex] & (1 << bitoffset)){
         //Increase weight
         if(weight != 0x0F){
           weight++;
@@ -90,16 +92,13 @@ void learn(Dendrite* d, SDR256 sdr, int threshold){
     if(reassign){
 
       SDR256 unusedBits;
-      SDR256 dend = toSDR(d);   // Probably not efficient to recalculate this, but KISS for now.
 
       // Get bits that are in the input sdr, but not on the dendrite
       for(int i = 0; i < 4; i++)
         unusedBits.bits[i] = ~dend.bits[i] & sdr.bits[i];
 
-
-
       /*
-        Not sure how I'll do this, but I need to
+        Not quite sure how I'll do this yet, but I need to figure it out
       */
     }
   }
